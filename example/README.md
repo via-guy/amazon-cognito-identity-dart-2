@@ -14,20 +14,17 @@ cd ios; pod install; cd ..
 ## Create lib/secrets.dart (Do not commit it aka add to .gitignore)
 
 ```dart
-// Setup AWS User Pool Id & Client Id settings here:
+// Store this file as lib/secrets.dart
+// Generate your own file using https://github.com/pal/simple-counter-server
 import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 
-const AWSUserPoolId = 'us-east-1_**********';
-const AWSClientId = '****************';
+const cognitoUserPoolId = 'us-east-1_XXXXXXX';
+const cognitoClientId = 'XXXXXXXXXXXXXXX';
+const cognitoIdentityPoolId = 'us-east-1:XXXXX-XXXXX-XXXX-XXXX-XXXXXXXX';
+const awsRegion = 'us-east-1';
+const apiEndpoint = 'https://XXXXXXX.execute-api.us-east-1.amazonaws.com';
 
-const IdentityPoolId = 'us-east-1:************';
-
-// Setup endpoints here:
-const Region = 'us-east-1';
-const Endpoint =
-'https://xxxxxxxxxx.execute-api.ap-southeast-1.amazonaws.com/dev';
-
-final userPool = CognitoUserPool(AWSUserPoolId, AWSClientId);
+final userPool = CognitoUserPool(cognitoUserPoolId, cognitoClientId);
 
 ```
 
@@ -35,7 +32,7 @@ final userPool = CognitoUserPool(AWSUserPoolId, AWSClientId);
   <img title="Cognito Dart Demo screenshot" src="https://user-images.githubusercontent.com/1572333/39953217-77967bda-55d9-11e8-940c-90c34f870cb6.png" height="400px">
 </p>
 
-See [Example Secure Counter Server](https://github.com/jonsaw/example-secure-counter-server) for sample API implementation.
+For a sample implementation of a secure server using Cognito, see [Simple Counter server in Javascript](https://github.com/pal/simple-counter-server) or [Secure Counter Server in Go](https://github.com/jonsaw/example-secure-counter-server).
 
 ### Sign Up
 

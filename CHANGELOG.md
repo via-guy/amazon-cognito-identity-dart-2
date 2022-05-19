@@ -1,3 +1,40 @@
+## 2.1.1
+- fixed: unexpected nullref during "initiateAuth" (authParameters is optional parameter in AuthenticationDetails)
+
+## 2.1.0
+- changed: SocketException detecting via pattern (removed dart:io dependency)
+
+## 2.0.3
+- added: flutter_test dev dependency
+
+## 2.0.2
+- added: flutter sdk dependency
+
+## 2.0.1
+- added: flutter dependency
+
+## 2.0.0
+- implement js BigInt workaround to speed up authenticateUser on flutter web
+- deprecated pedantic replaced with flutter_lints + code style
+
+## 1.0.5
+- Changed: exports client.dart to facilitate using injection for automated testing
+
+## 1.0.4
+- Changed: SigV4Request headers is case insensitive
+
+## 1.0.3
+- Removed: Temporary workaround to BigInt.modPow
+
+## 1.0.2
+- Changed: challengeName as nullable variable
+
+## 1.0.1
+- Storage initialization fixes
+
+## 1.0.0
+- Nullsafety branch is merged with latest non-nullsafety changes
+
 ## 0.1.25+4
 - Fixed: a storage key issue
 - Fixed: broken lastAuthUser lookup in CognitoUser
@@ -5,6 +42,21 @@
 ## 0.1.25+3
 - Fixed: a storage key issue
 - Defined a local variable `srp_username`, in order to not override `user` value
+
+## 1.0.0-nullsafety.3
+- Fixed: example
+- Fixed: Retrieving data from Storage as `FutureOr<String?>` breaks clients
+- Define `shared_preferences` as actual dependency, remove private file `.flutter-plugins-dependencies` and change code to work with latest `http`
+
+## 1.0.0-nullsafety.2
+- Fixed: http.post Uri argument
+
+## 1.0.0-nullsafety.1
+- Added optional validationData parameter for `sendCustomChallengeAnswer`
+- Fixed: http.post
+
+## 1.0.0-nullsafety.0
+- Initial null safety
 
 ## 0.1.25+2
 - Added optional validationData parameter for `sendCustomChallengeAnswer`

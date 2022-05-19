@@ -9,8 +9,9 @@ import 'cognito_user.dart';
 
 class CognitoUserPoolData {
   CognitoUser user;
-  bool userConfirmed;
-  String userSub;
+  bool? userConfirmed;
+  String? userSub;
+
   CognitoUserPoolData(this.user, {this.userConfirmed, this.userSub});
 
   factory CognitoUserPoolData.fromData(
@@ -24,26 +25,26 @@ class CognitoUserPoolData {
 }
 
 class CognitoUserPool {
-  String _userPoolId;
-  String _clientId;
-  String _clientSecret;
-  String _region;
+  late String _userPoolId;
+  String? _clientId;
+  String? _clientSecret;
+  String? _region;
   bool advancedSecurityDataCollectionFlag;
-  Client client;
-  CognitoStorage storage;
-  String _userAgent;
+  Client? client;
+  late CognitoStorage storage;
+  String? _userAgent;
   final ParamsDecorator _analyticsMetadataParamsDecorator;
 
   CognitoUserPool(
     String userPoolId,
     String clientId, {
-    String clientSecret,
-    String endpoint,
-    Client customClient,
-    String customUserAgent,
-    this.storage,
+    String? clientSecret,
+    String? endpoint,
+    Client? customClient,
+    String? customUserAgent,
+    CognitoStorage? storage,
     this.advancedSecurityDataCollectionFlag = true,
-    ParamsDecorator analyticsMetadataParamsDecorator,
+    ParamsDecorator? analyticsMetadataParamsDecorator,
   }) : _analyticsMetadataParamsDecorator =
             analyticsMetadataParamsDecorator ?? NoOpsParamsDecorator() {
     _userPoolId = userPoolId;
@@ -61,25 +62,26 @@ class CognitoUserPool {
       client = customClient;
     }
 
-    storage =
+    this.storage =
         storage ?? (CognitoStorageHelper(CognitoMemoryStorage())).getStorage();
   }
 
-  String get lastUserKey => 'CognitoIdentityServiceProvider.$_clientId.LastAuthUser';
+  String get lastUserKey =>
+      'CognitoIdentityServiceProvider.$_clientId.LastAuthUser';
 
   String getUserPoolId() {
     return _userPoolId;
   }
 
-  String getClientId() {
+  String? getClientId() {
     return _clientId;
   }
 
-  String getRegion() {
+  String? getRegion() {
     return _region;
   }
 
-  Future<CognitoUser> getCurrentUser() async {
+  Future<CognitoUser?> getCurrentUser() async {
     final lastAuthUser = await storage.getItem(lastUserKey);
     if (lastAuthUser != null) {
       return CognitoUser(lastAuthUser, this,
@@ -97,7 +99,7 @@ class CognitoUserPool {
   /// data on their client. Please refer to documentation to know more about using AdvancedSecurity
   /// features
   /// TODO: not supported at the moment
-  String getUserContextData(String username) {
+  String? getUserContextData(String? username) {
     return null;
   }
 
@@ -106,8 +108,8 @@ class CognitoUserPool {
   Future<CognitoUserPoolData> signUp(
     String username,
     String password, {
-    List<AttributeArg> userAttributes,
-    List<AttributeArg> validationData,
+    List<AttributeArg>? userAttributes,
+    List<AttributeArg>? validationData,
   }) async {
     final params = {
       'ClientId': _clientId,
@@ -119,20 +121,21 @@ class CognitoUserPool {
 
     if (_clientSecret != null) {
       params['SecretHash'] = CognitoUser.calculateClientSecretHash(
-          username, _clientId, _clientSecret);
+          username, _clientId!, _clientSecret!);
     }
 
-    final data = await client.request(
+    final data = await client!.request(
         'SignUp', await _analyticsMetadataParamsDecorator.call(params));
-    if (data == null) {
-      return null;
-    }
+
     return CognitoUserPoolData.fromData(
-      CognitoUser(username, this,
-          storage: storage,
-          clientSecret: _clientSecret,
-          deviceName: _userAgent,
-          analyticsMetadataParamsDecorator: _analyticsMetadataParamsDecorator),
+      CognitoUser(
+        username,
+        this,
+        storage: storage,
+        clientSecret: _clientSecret,
+        deviceName: _userAgent,
+        analyticsMetadataParamsDecorator: _analyticsMetadataParamsDecorator,
+      ),
       data,
     );
   }

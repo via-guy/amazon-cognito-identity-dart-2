@@ -13,15 +13,15 @@ void main() {
   });
   test('.getLargeAValue() returns largeAValue', () {
     final h = AuthenticationHelper('pool_name');
-    expect(h.getLargeAValue(), TypeMatcher<BigInt>());
+    expect(h.getLargeAValue(), const TypeMatcher<BigInt>());
   });
   test('.getSmallAValue() returns largeAValue', () {
     final h = AuthenticationHelper('pool_name');
-    expect(h.getSmallAValue(), TypeMatcher<BigInt>());
+    expect(h.getSmallAValue(), const TypeMatcher<BigInt>());
   });
   test('.generateRandomSmallA() returns 128-length BigInteger', () {
     final h = AuthenticationHelper('pool_name');
-    expect(h.generateRandomSmallA(), TypeMatcher<BigInt>());
+    expect(h.generateRandomSmallA(), const TypeMatcher<BigInt>());
     expect(h.generateRandomSmallA().toRadixString(16).length, equals(128));
   });
   test('.hexHash() generates valid hash', () {
@@ -34,7 +34,7 @@ void main() {
   test('.generateHashDevice() generates verifierDevices', () {
     final h = AuthenticationHelper('pool_name');
     h.generateHashDevice('macbook:key', 'see.saw@email.com');
-    expect(h.getVerifierDevices().length, anyOf([766, 768, 770]));
+    expect(h.getVerifierDevices()!.length, anyOf([766, 768, 770]));
   });
   test('.padHex() with odd length pads left', () {
     final h = AuthenticationHelper('pool_name');

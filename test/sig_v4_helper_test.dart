@@ -112,7 +112,7 @@ void main() {
             'b1c0d2a81c6839b36839e8d9b273cb17279370ab430e5e3fc8218e2bcaa6373b'));
   });
   test('.calculateSignature() returns valid signature', () {
-    final stringToSign = 'AWS4-HMAC-SHA256\n'
+    const stringToSign = 'AWS4-HMAC-SHA256\n'
         '20180515T011950Z\n'
         '20180515/ap-southeast-1/execute-api/aws4_request\n'
         'POST\n'
@@ -176,7 +176,7 @@ void main() {
     expect(
         signedRequest.url, equals('$endpoint/projects/123?color=orange%20red'));
     expect(
-        signedRequest.headers['Authorization'],
+        signedRequest.headers!['Authorization'],
         equals('AWS4-HMAC-SHA256 '
             'Credential=AXXXXXXXXXXXXXXXXXXX/20180515/ap-southeast-1/execute-api/aws4_request, '
             'SignedHeaders=accept;content-type;header-1;header-2;host;x-amz-date, '
